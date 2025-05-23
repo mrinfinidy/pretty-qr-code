@@ -6,7 +6,6 @@ from qrcode.image.styles.moduledrawers.svg import SvgCircleDrawer
 from qrcode.image.styledpil import StyledPilImage
 from qrcode.image.styles.moduledrawers.pil import CircleModuleDrawer, RoundedModuleDrawer
 from qrcode.image.styles.colormasks import RadialGradiantColorMask, SolidFillColorMask
-import PIL
 from PIL import Image, ImageDraw
 import os
 import sys
@@ -96,12 +95,14 @@ def create_img(qr, input_img):
     qr_img = qr.make_image(
             image_factory=StyledPilImage,
             module_drawer=CircleModuleDrawer(),
+            color_mask=SolidFillColorMask(front_color=(0, 0, 0)),
             embeded_image_path = embeded_image_path
         )
     
     qr_img_simple = qr.make_image(
             image_factory=StyledPilImage,
-            module_drawer=CircleModuleDrawer()
+            module_drawer=CircleModuleDrawer(),
+            color_mask=SolidFillColorMask(front_color=(0, 0, 0))
         )
 
     inner_eye_mask = style_inner_eyes(qr_img)
@@ -134,7 +135,7 @@ def generate_qr_code(
 
 # Save the image to a file
 def save_img(final_img, output_name):
-    result_path = 'result/'
+    result_path = 'result_test/'
     if not os.path.exists(result_path):
         os.makedirs((result_path))
     if not output_name:
@@ -160,7 +161,7 @@ def make_qrcode_svg(input_data, output_name):
         image_factory=qrcode.image.svg.SvgImage,
         module_drawer=SvgCircleDrawer(),
     )
-    result_path = 'result/'
+    result_path = 'result_test/'
     if not os.path.exists(result_path):
         os.makedirs((result_path))
     if not output_name:
