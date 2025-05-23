@@ -17,7 +17,6 @@ pkgs.python3Packages.buildPythonApplication {
 
   makeWrapperArgs = [
     "--set NESTO_DEFAULT_QR_LOGO ${./../assets/default.png}"
-    "--set NESTO_DEFAULT_QR_LOGO_POS_ADAPTER ${./../assets/nesto-pos-logo.png}"
   ];
 
   meta = with lib; {
