@@ -2,4 +2,3 @@ __pycache__/
 qrenv/
 result
 qrcode-output/
-shell.nix
