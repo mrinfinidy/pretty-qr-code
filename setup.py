@@ -11,7 +11,7 @@ setup(
     license = "Closed",
     url = "https://gitlab.nesto.app/nesto-software/pos-adapter-v2/qr-code-generator",
     packages=find_packages(),
-    scripts = ["qr-code-generator/qr-code-generator.py", "qr-code-generator/qr-simple.py"],
+    scripts = ["src/qr_code_generator.py"],
     install_requires=[
         'qrcode',
         'PIL'
