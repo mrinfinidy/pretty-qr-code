@@ -85,14 +85,12 @@ def create_image(qr, input_image, base_color, inner_eye_color, outer_eye_color):
             image_factory=StyledPilImage,
             eye_drawer=RoundedModuleDrawer(),
             color_mask=SolidFillColorMask(front_color=hex_to_rgb(inner_eye_color))
-            #color_mask=SolidFillColorMask(front_color=(0, 162, 174))
         )
     
     outer_eyes_image = qr.make_image(
             image_factory=StyledPilImage,
             eye_drawer=RoundedModuleDrawer(),
             color_mask=SolidFillColorMask(front_color=hex_to_rgb(outer_eye_color))
-            # color_mask=SolidFillColorMask(front_color=(0, 0, 0))
         )
 
     embeded_image_name = input_image
@@ -113,7 +111,6 @@ def create_image(qr, input_image, base_color, inner_eye_color, outer_eye_color):
             image_factory=StyledPilImage,
             module_drawer=CircleModuleDrawer(),
             color_mask=SolidFillColorMask(front_color=hex_to_rgb(base_color))
-            # color_mask=SolidFillColorMask(front_color=(0, 0, 0))
         )
 
     inner_eye_mask = style_inner_eyes(qr_image)
@@ -180,21 +177,3 @@ def make_qrcode_svg(input_data, output_name):
     else:
         result_path = os.path.join(result_path, output_name + '.svg');
     qr_svg.save(result_path)
-
-
-# if len(sys.argv) == 4:
-#     input_data = sys.argv[1]
-#     input_image = sys.argv[2]
-#     output_name = sys.argv[3]
-#     make_qrcode(input_data, input_image, output_name)
-#     make_qrcode_svg(input_data, output_name)
-# elif len(sys.argv) != 1:
-#     print("Usage: qr-code-generator <data_to_encode> <image_file_name> <output_file_name>")
-# else:
-#     input_data = input('1) Input data (url) you want to encode:\n')
-#     print()
-#     input_image = input('2) Input file name (e.g. \'xyz.png\') for the center image:\n(leave blank for no image or \'default\' for generic nesto logo or \'pos-adapter\' for pos-adapter logo)\n')
-#     print()
-#     output_name = input('3)Input result file name:\n')
-#     make_qrcode(input_data, input_image, output_name)
-#     make_qrcode_svg(input_data, output_name)
