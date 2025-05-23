@@ -63,13 +63,13 @@ def main (argv):
             if style_inner not in DRAWER_CLASSES:
                 print(f"Error: style-inner '{style_inner}' not recognized. Choose one of: {', '.join(DRAWER_CLASSES.keys())}")
                 sys.exit(1)
-            drawer_inner_instance = DRAWER_CLASSES[style_inner]()
+            drawer_instance_inner = DRAWER_CLASSES[style_inner]()
         elif opt == "--style-outer":
             style_outer = arg
             if style_outer not in DRAWER_CLASSES:
                 print(f"Error: style-outer '{style_outer}' not recognized. Choose one of: {', '.join(DRAWER_CLASSES.keys())}")
                 sys.exit(1)
-            drawer_outer_instance = DRAWER_CLASSES[style_outer]()
+            drawer_instance_outer = DRAWER_CLASSES[style_outer]()
         elif opt in ("-b", "--base"):
             base_color = arg
         elif opt in ("-n", "--inner"):
