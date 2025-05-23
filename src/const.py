@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from qr_code_generator import (
     SquareModuleDrawer,
     GappedSquareModuleDrawer,
@@ -8,20 +10,20 @@ from qr_code_generator import (
 )
 
 ALLOWED_STYLES = {
-    "SquareModuleDrawer",
-    "GappedSquareModuleDrawer",
-    "CircleModuleDrawer",
-    "RoundedModuleDrawer",
-    "VerticalBarsDrawer",
-    "HorizontalBarsDrawer"
+    "square",
+    "gapped-square",
+    "circle",
+    "round",
+    "vertical-bars",
+    "horizontal-bars"
 }
 
 DRAWER_CLASSES = {
-    "SquareModuleDrawer": SquareModuleDrawer,
-    "GappedSquareModuleDrawer": GappedSquareModuleDrawer,
-    "CircleModuleDrawer": CircleModuleDrawer,
-    "RoundedModuleDrawer": RoundedModuleDrawer,
-    "VerticalBarsDrawer": VerticalBarsDrawer,
-    "HorizontalBarsDrawer": HorizontalBarsDrawer,
+    "square": SquareModuleDrawer,
+    "gapped-square": GappedSquareModuleDrawer,
+    "circle": CircleModuleDrawer,
+    "round": RoundedModuleDrawer,
+    "vertical-bars": VerticalBarsDrawer,
+    "horizontal-bars": HorizontalBarsDrawer,
 }
 

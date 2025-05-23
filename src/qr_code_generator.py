@@ -5,7 +5,14 @@ from qrcode.image.styles import colormasks
 import qrcode.image.svg
 from qrcode.image.styles.moduledrawers.svg import SvgCircleDrawer
 from qrcode.image.styledpil import StyledPilImage
-from qrcode.image.styles.moduledrawers.pil import CircleModuleDrawer, RoundedModuleDrawer
+from qrcode.image.styles.moduledrawers.pil import (
+    SquareModuleDrawer,
+    GappedSquareModuleDrawer,
+    CircleModuleDrawer,
+    RoundedModuleDrawer,
+    VerticalBarsDrawer,
+    HorizontalBarsDrawer
+)
 from qrcode.image.styles.colormasks import RadialGradiantColorMask, SolidFillColorMask
 from PIL import Image, ImageDraw
 import os
@@ -80,16 +87,25 @@ def add_data(qr, input_data):
     qr.make(fit=True)
 
 # Create an image from the QR code instance
-def create_image(qr, input_image, base_color, inner_eye_color, outer_eye_color):
+def create_image(
+    qr,
+    input_image,
+    drawer_instance,
+    drawer_instance_inner,
+    drawer_instance_outer,
+    base_color,
+    inner_eye_color,
+    outer_eye_color
+):
     inner_eyes_image = qr.make_image(
             image_factory=StyledPilImage,
-            eye_drawer=RoundedModuleDrawer(),
+            eye_drawer=drawer_instance_inner,
             color_mask=SolidFillColorMask(front_color=hex_to_rgb(inner_eye_color))
         )
     
     outer_eyes_image = qr.make_image(
             image_factory=StyledPilImage,
-            eye_drawer=RoundedModuleDrawer(),
+            eye_drawer=drawer_instance_outer,
             color_mask=SolidFillColorMask(front_color=hex_to_rgb(outer_eye_color))
         )
 
@@ -102,14 +118,14 @@ def create_image(qr, input_image, base_color, inner_eye_color, outer_eye_color):
 
     qr_image = qr.make_image(
             image_factory=StyledPilImage,
-            module_drawer=CircleModuleDrawer(),
+            module_drawer=drawer_instance,
             color_mask=SolidFillColorMask(front_color=hex_to_rgb(base_color)),
             embeded_image_path = embeded_image_path
         )
     
     qr_image_simple = qr.make_image(
             image_factory=StyledPilImage,
-            module_drawer=CircleModuleDrawer(),
+            module_drawer=drawer_instance,
             color_mask=SolidFillColorMask(front_color=hex_to_rgb(base_color))
         )
 
@@ -154,10 +170,29 @@ def save_image(final_image, output_name):
     final_image.save(result_path)
 
 # main function that calls all steps needed to make a qrcode
-def make_qrcode(input_data, input_image, base_color, inner_eye_color, outer_eye_color, output_name):
+def make_qrcode(
+    input_data,
+    input_image,
+    drawer_instance,
+    drawer_instance_inner,
+    drawer_instance_outer,
+    base_color,
+    inner_eye_color,
+    outer_eye_color,
+    output_name
+):
     qr = create_qrcode_instance()
     add_data(qr, input_data)
-    qr_image_parts = create_image(qr, input_image, base_color, inner_eye_color, outer_eye_color)
+    qr_image_parts = create_image(
+        qr,
+        input_image,
+        drawer_instance,
+        drawer_instance_inner,
+        drawer_instance_outer,
+        base_color,
+        inner_eye_color,
+        outer_eye_color
+    )
     final_image = generate_qr_code(qr, qr_image_parts)
     save_image(final_image, output_name)
 
