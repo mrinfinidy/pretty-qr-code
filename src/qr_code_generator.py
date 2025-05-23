@@ -158,15 +158,12 @@ def generate_qr_code(
     return Image.composite(qr_image_parts.outer_eyes_image, intermediate_image, qr_image_parts.outer_eye_mask)
 
 # Save the image to a file
-def save_image(final_image, output_name):
-    result_path = 'result_test/'
-    if not os.path.exists(result_path):
-        os.makedirs((result_path))
-    if not output_name:
-        result_path = os.path.join(result_path, 'qrcode.png')
-    else:
-        result_path = os.path.join(result_path, output_name + '.png');
-    print("Saving to: ", result_path)
+def save_image(final_image, output_dir):
+    if not os.path.exists(output_dir):
+        print(f"Output directory '{output_dir}' does not exist. Creating it.")
+        os.makedirs(output_dir)
+    result_path = os.path.join(output_dir, 'qrcode.png')
+    print("Saving .png to: ", result_path)
     final_image.save(result_path)
 
 # main function that calls all steps needed to make a qrcode
@@ -179,7 +176,7 @@ def make_qrcode(
     base_color,
     inner_eye_color,
     outer_eye_color,
-    output_name
+    output_dir
 ):
     qr = create_qrcode_instance()
     add_data(qr, input_data)
@@ -194,21 +191,18 @@ def make_qrcode(
         outer_eye_color
     )
     final_image = generate_qr_code(qr, qr_image_parts)
-    save_image(final_image, output_name)
+    save_image(final_image, output_dir)
 
 # Additionaly to the png qrcode an svg is created as well
-def make_qrcode_svg(input_data, output_name):
+def make_qrcode_svg(input_data, output_dir):
     qr = create_qrcode_instance()
     add_data(qr, input_data)
     qr_svg = qr.make_image(
         image_factory=qrcode.image.svg.SvgImage,
         module_drawer=SvgCircleDrawer(),
     )
-    result_path = 'result_test/'
-    if not os.path.exists(result_path):
-        os.makedirs((result_path))
-    if not output_name:
-        result_path = os.path.join(result_path, 'qrcode.svg')
-    else:
-        result_path = os.path.join(result_path, output_name + '.svg');
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    result_path = os.path.join(output_dir, 'qrcode.svg')
+    print("Saving .svg to: ", result_path)
     qr_svg.save(result_path)

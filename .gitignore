@@ -1,5 +1,5 @@
 __pycache__/
 qrenv/
 result
-result_test
+qrcode-output/
 shell.nix

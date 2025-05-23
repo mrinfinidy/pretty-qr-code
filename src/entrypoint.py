@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys, getopt
+import sys, getopt, os
 from qr_code_generator import make_qrcode, make_qrcode_svg
 from const import DRAWER_CLASSES
 
@@ -16,8 +16,7 @@ Options:
   --style-outer         Style (optional)
   -b, --base            Base color hex code (e.g. #000000)
   -n, --inner           Inner eye color hex code
-  -r, --outer           Outer eye color hex code
-  -o, --output          Output file name (required)
+  -o, --output          Output file path (optional)
   --svg             Also generate SVG output (flag, optional)
 
 Example:
@@ -25,7 +24,6 @@ Example:
 """)
 
 def main (argv):
-    print("Arguments: ", argv)
     input_data = ''
     input_image = ''
     drawer_instance = DRAWER_CLASSES['square']()
@@ -35,14 +33,17 @@ def main (argv):
     inner_eye_color = '#000000'
     outer_eye_color = '#000000'
     include_svg = False
-    output_name = 'output'
+    output_dir = './qrcode-output/'
     
     try:
-        opts, args = getopt.getopt(argv, "hi:o:d:b:n:r:s:", ["input=", "output=", "data=", "base=", "inner=", "outer=", "svg", "style=", "style-inner=", "style-outer="])
+        opts, args = getopt.getopt(
+            argv,
+            "hi:o:d:b:n:r:",
+            ["input=", "output=", "data=", "base=", "inner=", "outer=", "svg", "style=", "style-inner=", "style-outer="]
+        )
     except getopt.GetoptError:
         print_usage()
         sys.exit(2)
-    print("Parsed options: ", opts)
     for opt, arg in opts:
         if opt == '-h':
             print('entrypoint.py -i <input_image> -o <output_name> -d <data_to_encode>')
@@ -75,10 +76,11 @@ def main (argv):
             inner_eye_color = arg
         elif opt in ("-r", "--outer"):
             outer_eye_color = arg
-        elif opt in ("--svg"):
+        elif opt == "--svg":
             include_svg = True
         elif opt in ("-o", "--output"):
-            output_name = arg
+            output_dir = arg
+
     make_qrcode(
         input_data,
         input_image,
@@ -88,10 +90,10 @@ def main (argv):
         base_color,
         inner_eye_color,
         outer_eye_color,
-        output_name
+        output_dir
     )
     if include_svg:
-        make_qrcode_svg(input_data, output_name)
+        make_qrcode_svg(input_data, output_dir)
 
 if __name__ == "__main__":
     import sys
