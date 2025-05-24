@@ -8,19 +8,26 @@ def print_usage():
     print("""Usage: entrypoint.py [options]
 
 Options:
-  -h, --help            Show this help message and exit
-  -d, --data            Data to encode in QR code (required)
-  -i, --input           Input image file (optional)
-  -s, --style           Style (optional)
-  --style-innter        Style (optional)
-  --style-outer         Style (optional)
-  -b, --base            Base color hex code (e.g. #000000)
-  -n, --inner           Inner eye color hex code
-  -o, --output          Output file path (optional)
-  --svg             Also generate SVG output (flag, optional)
+  -h, --help                  Show this help message and exit
+  -d, --data <data>           Data to encode in QR code (required)
+  -i, --input <image>         Input image file name (optional)
+  -s, --style <style>         Style for the QR code modules (optional)
+      --style-inner <style>   Style for the inner eyes (optional)
+      --style-outer <style>   Style for the outer eyes (optional)
+  -b, --base <hex>            Base color hex code (e.g. #000000)
+  -n, --color-inner <hex>     Inner eye color hex code
+  -r, --color-outer <hex>     Outer eye color hex code
+  -o, --output <dir>          Output directory path (default: ./qrcode-output/)
+      --svg                   Also generate SVG output (optional flag)
+      --version <int>         QR version (default: 5)
+      --box-size <int>        Box size in pixels (default: 10)
+      --border <int>          Border size in boxes (default: 4)
+      --error-correction <L|M|Q|H>  Error correction level (default: H)
+
+Available styles: square, gapped-square, circle, round, vertical-bars, horizontal-bars
 
 Example:
-  entrypoint.py -d "https://example.com" -i logo.png -b #000000 -n #000fff -r #fff000 -o qrcode.png -s
+  entrypoint.py -d "https://example.com" -i logo.png -b #000000 -n #000fff -r #fff000 -o ./output --style circle --style-inner square --style-outer circle --svg
 """)
 
 def main (argv):
@@ -48,8 +55,8 @@ def main (argv):
                 "output=",
                 "data=",
                 "base=",
-                "inner=",
-                "outer=",
+                "color-inner=",
+                "color-outer=",
                 "svg",
                 "style=",
                 "style-inner=",
@@ -65,7 +72,7 @@ def main (argv):
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('entrypoint.py -i <input_image> -o <output_name> -d <data_to_encode>')
+            print_usage()
             sys.exit()
         elif opt in ("-d", "--data"):
             input_data = arg
@@ -91,9 +98,9 @@ def main (argv):
             drawer_instance_outer = DRAWER_CLASSES[style_outer]()
         elif opt in ("-b", "--base"):
             base_color = arg
-        elif opt in ("-n", "--inner"):
+        elif opt in ("-n", "--color-inner"):
             inner_eye_color = arg
-        elif opt in ("-r", "--outer"):
+        elif opt in ("-r", "--color-outer"):
             outer_eye_color = arg
 
         elif opt == "--version":
