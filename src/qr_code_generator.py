@@ -1,18 +1,11 @@
 #!/usr/bin/env python
 
 import qrcode
-from qrcode.image.styles import colormasks
+from qrcode.constants import ERROR_CORRECT_H
 import qrcode.image.svg
 from qrcode.image.styles.moduledrawers.svg import SvgCircleDrawer
 from qrcode.image.styledpil import StyledPilImage
-from qrcode.image.styles.moduledrawers.pil import (
-    SquareModuleDrawer,
-    GappedSquareModuleDrawer,
-    CircleModuleDrawer,
-    RoundedModuleDrawer,
-    VerticalBarsDrawer,
-    HorizontalBarsDrawer
-)
+from qrcode.image.styles.moduledrawers.pil import CircleModuleDrawer
 from qrcode.image.styles.colormasks import RadialGradiantColorMask, SolidFillColorMask
 from PIL import Image, ImageDraw
 import os
@@ -46,39 +39,47 @@ def hex_to_rgb(hex):
     )
     
 
-def style_inner_eyes(image):
-  image_size = image.size[0]
-  eye_size = 70 #default
-  quiet_zone = 40 #default
-  mask = Image.new('L', image.size, 0)
-  draw = ImageDraw.Draw(mask)
-  draw.rectangle((60, 60, 90, 90), fill=255) #top left eye
-  draw.rectangle((image_size-90, 60, image_size-60, 90), fill=255) #top right eye
-  draw.rectangle((60, image_size-90, 90, image_size-60), fill=255) #bottom left eye
-  return mask
+def style_inner_eyes(image, box_size=10, border=4, modules_count=37):
+    mask = Image.new('L', image.size, 0)
+    draw = ImageDraw.Draw(mask)
 
-def style_outer_eyes(image):
-  image_size = image.size[0]
-  eye_size = 70 #default
-  quiet_zone = 40 #default
-  mask = Image.new('L', image.size, 0)
-  draw = ImageDraw.Draw(mask)
-  draw.rectangle((40, 40, 110, 110), fill=255) #top left eye
-  draw.rectangle((image_size-110, 40, image_size-40, 110), fill=255) #top right eye
-  draw.rectangle((40, image_size-110, 110, image_size-40), fill=255) #bottom left eye
-  draw.rectangle((60, 60, 90, 90), fill=0) #top left eye
-  draw.rectangle((image_size-90, 60, image_size-60, 90), fill=0) #top right eye
-  draw.rectangle((60, image_size-90, 90, image_size-60), fill=0) #bottom left eye  
-  return mask
+    def draw_eye(x_mod, y_mod):
+        # Offset by 2 modules to land in center of 7x7 eye
+        x = (border + x_mod + 2) * box_size
+        y = (border + y_mod + 2) * box_size
+        draw.rectangle((x, y, x + 3 * box_size, y + 3 * box_size), fill=255)
 
+    draw_eye(0, 0)  # top-left
+    draw_eye(modules_count - 7, 0)  # top-right
+    draw_eye(0, modules_count - 7)  # bottom-left
+
+    return mask
+
+def style_outer_eyes(image, box_size=10, border=4, modules_count=37):
+    img_size = image.size[0]
+    mask = Image.new('L', image.size, 0)
+    draw = ImageDraw.Draw(mask)
+
+    def draw_eye(x_mod, y_mod):
+        x = border * box_size + x_mod * box_size
+        y = border * box_size + y_mod * box_size
+        draw.rectangle((x, y, x + 7 * box_size, y + 7 * box_size), fill=255)
+        draw.rectangle((x + 2 * box_size, y + 2 * box_size,
+                        x + 5 * box_size, y + 5 * box_size), fill=0)
+
+    draw_eye(0, 0)  # top-left
+    draw_eye(modules_count - 7, 0)  # top-right
+    draw_eye(0, modules_count - 7)  # bottom-left
+
+    return mask
 
 # Create a QR code instance
-def create_qrcode_instance():
+def create_qrcode_instance(version=5, error_correction=ERROR_CORRECT_H, box_size=10, border=4):
     return qrcode.QRCode(
-        version=5,  # QR code version
-        error_correction=qrcode.constants.ERROR_CORRECT_H,  # Error correction level
-        box_size=10,  # Size of each box in the QR code
-        border=4,    # Border size
+        version=version,
+        error_correction=error_correction,
+        box_size=box_size,
+        border=border
     )
 
 # Add data to the QR code
@@ -95,7 +96,11 @@ def create_image(
     drawer_instance_outer,
     base_color,
     inner_eye_color,
-    outer_eye_color
+    outer_eye_color,
+    version,
+    error_correction,
+    box_size,
+    border,
 ):
     inner_eyes_image = qr.make_image(
             image_factory=StyledPilImage,
@@ -129,8 +134,8 @@ def create_image(
             color_mask=SolidFillColorMask(front_color=hex_to_rgb(base_color))
         )
 
-    inner_eye_mask = style_inner_eyes(qr_image)
-    outer_eye_mask = style_outer_eyes(qr_image)
+    inner_eye_mask = style_inner_eyes(qr_image, box_size, border, qr.modules_count)
+    outer_eye_mask = style_outer_eyes(qr_image, box_size, border, qr.modules_count)
     return Qr_image_parts(embeded_image_name, inner_eyes_image, inner_eye_mask, outer_eyes_image, outer_eye_mask, qr_image, qr_image_simple)
 
 # Generate qr code based on image input
@@ -176,9 +181,18 @@ def make_qrcode(
     base_color,
     inner_eye_color,
     outer_eye_color,
+    version,
+    error_correction,
+    box_size,
+    border,
     output_dir
 ):
-    qr = create_qrcode_instance()
+    qr = create_qrcode_instance(
+        version,
+        error_correction,
+        box_size,
+        border
+    )
     add_data(qr, input_data)
     qr_image_parts = create_image(
         qr,
@@ -188,7 +202,11 @@ def make_qrcode(
         drawer_instance_outer,
         base_color,
         inner_eye_color,
-        outer_eye_color
+        outer_eye_color,
+        version,
+        error_correction,
+        box_size,
+        border,
     )
     final_image = generate_qr_code(qr, qr_image_parts)
     save_image(final_image, output_dir)

@@ -1,12 +1,19 @@
 #!/usr/bin/env python
 
-from qr_code_generator import (
+from qrcode.image.styles.moduledrawers.pil import (
     SquareModuleDrawer,
     GappedSquareModuleDrawer,
     CircleModuleDrawer,
     RoundedModuleDrawer,
     VerticalBarsDrawer,
     HorizontalBarsDrawer
+)
+
+from qrcode.constants import (
+    ERROR_CORRECT_L,
+    ERROR_CORRECT_M,
+    ERROR_CORRECT_Q,
+    ERROR_CORRECT_H
 )
 
 ALLOWED_STYLES = {
@@ -27,3 +34,9 @@ DRAWER_CLASSES = {
     "horizontal-bars": HorizontalBarsDrawer,
 }
 
+ERROR_CORRECTION_LEVELS = {
+    "L": ERROR_CORRECT_L,
+    "M": ERROR_CORRECT_M,
+    "Q": ERROR_CORRECT_Q,
+    "H": ERROR_CORRECT_H
+}

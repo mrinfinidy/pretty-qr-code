@@ -2,7 +2,7 @@
 
 import sys, getopt, os
 from qr_code_generator import make_qrcode, make_qrcode_svg
-from const import DRAWER_CLASSES
+from const import ( DRAWER_CLASSES, ERROR_CORRECTION_LEVELS )
 
 def print_usage():
     print("""Usage: entrypoint.py [options]
@@ -33,13 +33,32 @@ def main (argv):
     inner_eye_color = '#000000'
     outer_eye_color = '#000000'
     include_svg = False
+    version = 5
+    error_correction = ERROR_CORRECTION_LEVELS['H']
+    box_size = 10
+    border = 4
     output_dir = './qrcode-output/'
     
     try:
         opts, args = getopt.getopt(
             argv,
             "hi:o:d:b:n:r:",
-            ["input=", "output=", "data=", "base=", "inner=", "outer=", "svg", "style=", "style-inner=", "style-outer="]
+            [
+            "input=",
+                "output=",
+                "data=",
+                "base=",
+                "inner=",
+                "outer=",
+                "svg",
+                "style=",
+                "style-inner=",
+                "style-outer=",
+                "version=",
+                "box-size=",
+                "border=",
+                "error-correction="
+            ]
         )
     except getopt.GetoptError:
         print_usage()
@@ -76,6 +95,25 @@ def main (argv):
             inner_eye_color = arg
         elif opt in ("-r", "--outer"):
             outer_eye_color = arg
+
+        elif opt == "--version":
+            version = int(arg)
+        elif opt == "--box-size":
+            box_size = int(arg)
+        elif opt == "--border":
+            border = int(arg)
+        elif opt == "--error-correction":
+            ec_levels = {
+                'L': ERROR_CORRECTION_LEVELS['L'],
+                'M': ERROR_CORRECTION_LEVELS['M'],
+                'Q': ERROR_CORRECTION_LEVELS['Q'],
+                'H': ERROR_CORRECTION_LEVELS['H']
+            }
+            if arg.upper() in ec_levels:
+                error_correction = ec_levels[arg.upper()]
+            else:
+                print("Invalid error correction level. Choose from: L, M, Q, H.")
+                sys.exit(1)
         elif opt == "--svg":
             include_svg = True
         elif opt in ("-o", "--output"):
@@ -90,6 +128,10 @@ def main (argv):
         base_color,
         inner_eye_color,
         outer_eye_color,
+        version,
+        error_correction,
+        box_size,
+        border,
         output_dir
     )
     if include_svg:
