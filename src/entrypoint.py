@@ -6,7 +6,7 @@ from qr_code_generator import make_qrcode, make_qrcode_svg
 from const import DRAWER_CLASSES, ERROR_CORRECTION_LEVELS
 
 def print_usage():
-    print("""Usage: entrypoint.py [options]
+    print("""Usage: qrcode-pretty [options]
 
 Options:
   -h, --help                  Show this help message and exit
