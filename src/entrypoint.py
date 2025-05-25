@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-import sys, getopt, os
+import sys
+import getopt
 from qr_code_generator import make_qrcode, make_qrcode_svg
-from const import ( DRAWER_CLASSES, ERROR_CORRECTION_LEVELS )
+from const import DRAWER_CLASSES, ERROR_CORRECTION_LEVELS
 
 def print_usage():
     print("""Usage: entrypoint.py [options]
@@ -30,28 +31,16 @@ Example:
   entrypoint.py -d "https://example.com" -i logo.png -b #000000 -n #000fff -r #fff000 -o ./output --style circle --style-inner square --style-outer circle --svg
 """)
 
-def main (argv):
-    input_data = ''
-    input_image = ''
-    drawer_instance = DRAWER_CLASSES['square']()
-    drawer_instance_inner = DRAWER_CLASSES['square']()
-    drawer_instance_outer = DRAWER_CLASSES['square']()
-    base_color = '#000000'
-    inner_eye_color = '#000000'
-    outer_eye_color = '#000000'
+def main(argv):
+    kwargs = {}
     include_svg = False
-    version = 5
-    error_correction = ERROR_CORRECTION_LEVELS['H']
-    box_size = 10
-    border = 4
-    output_dir = './qrcode-output/'
-    
+
     try:
         opts, args = getopt.getopt(
             argv,
-            "hi:o:d:b:n:r:",
+            "hi:o:d:b:n:r:s:",
             [
-            "input=",
+                "input=",
                 "output=",
                 "data=",
                 "base=",
@@ -70,80 +59,78 @@ def main (argv):
     except getopt.GetoptError:
         print_usage()
         sys.exit(2)
+
     for opt, arg in opts:
         if opt == '-h':
             print_usage()
             sys.exit()
+
         elif opt in ("-d", "--data"):
-            input_data = arg
-        elif opt in ("-i", "--input"):   # lowercase i for input, to match getopt
-            input_image = arg
+            kwargs["input_data"] = arg
+
+        elif opt in ("-i", "--input"):
+            kwargs["input_image"] = arg
+
         elif opt in ("-s", "--style"):
-            style = arg
-            if style not in DRAWER_CLASSES:
-                print(f"Error: style '{style}' not recognized. Choose one of: {', '.join(DRAWER_CLASSES.keys())}")
+            if arg not in DRAWER_CLASSES:
+                print(f"Error: style '{arg}' not recognized. Choose one of: {', '.join(DRAWER_CLASSES.keys())}")
                 sys.exit(1)
-            drawer_instance = DRAWER_CLASSES[style]()
+            kwargs["drawer_instance"] = DRAWER_CLASSES[arg]()
+
         elif opt == "--style-inner":
-            style_inner = arg
-            if style_inner not in DRAWER_CLASSES:
-                print(f"Error: style-inner '{style_inner}' not recognized. Choose one of: {', '.join(DRAWER_CLASSES.keys())}")
+            if arg not in DRAWER_CLASSES:
+                print(f"Error: style-inner '{arg}' not recognized. Choose one of: {', '.join(DRAWER_CLASSES.keys())}")
                 sys.exit(1)
-            drawer_instance_inner = DRAWER_CLASSES[style_inner]()
+            kwargs["drawer_instance_inner"] = DRAWER_CLASSES[arg]()
+
         elif opt == "--style-outer":
-            style_outer = arg
-            if style_outer not in DRAWER_CLASSES:
-                print(f"Error: style-outer '{style_outer}' not recognized. Choose one of: {', '.join(DRAWER_CLASSES.keys())}")
+            if arg not in DRAWER_CLASSES:
+                print(f"Error: style-outer '{arg}' not recognized. Choose one of: {', '.join(DRAWER_CLASSES.keys())}")
                 sys.exit(1)
-            drawer_instance_outer = DRAWER_CLASSES[style_outer]()
+            kwargs["drawer_instance_outer"] = DRAWER_CLASSES[arg]()
+
         elif opt in ("-b", "--base"):
-            base_color = arg
+            kwargs["base_color"] = arg
+
         elif opt in ("-n", "--color-inner"):
-            inner_eye_color = arg
+            kwargs["inner_eye_color"] = arg
+
         elif opt in ("-r", "--color-outer"):
-            outer_eye_color = arg
+            kwargs["outer_eye_color"] = arg
 
         elif opt == "--version":
-            version = int(arg)
+            kwargs["version"] = int(arg)
+
         elif opt == "--box-size":
-            box_size = int(arg)
+            kwargs["box_size"] = int(arg)
+
         elif opt == "--border":
-            border = int(arg)
+            kwargs["border"] = int(arg)
+
         elif opt == "--error-correction":
-            ec_levels = {
-                'L': ERROR_CORRECTION_LEVELS['L'],
-                'M': ERROR_CORRECTION_LEVELS['M'],
-                'Q': ERROR_CORRECTION_LEVELS['Q'],
-                'H': ERROR_CORRECTION_LEVELS['H']
-            }
-            if arg.upper() in ec_levels:
-                error_correction = ec_levels[arg.upper()]
+            ec_levels = ERROR_CORRECTION_LEVELS
+            arg_upper = arg.upper()
+            if arg_upper in ec_levels:
+                kwargs["error_correction"] = ec_levels[arg_upper]
             else:
                 print("Invalid error correction level. Choose from: L, M, Q, H.")
                 sys.exit(1)
+
+        elif opt in ("-o", "--output"):
+            kwargs["output_dir"] = arg
+
         elif opt == "--svg":
             include_svg = True
-        elif opt in ("-o", "--output"):
-            output_dir = arg
 
-    make_qrcode(
-        input_data,
-        input_image,
-        drawer_instance,
-        drawer_instance_inner,
-        drawer_instance_outer,
-        base_color,
-        inner_eye_color,
-        outer_eye_color,
-        version,
-        error_correction,
-        box_size,
-        border,
-        output_dir
-    )
+    if "input_data" not in kwargs:
+        print("Error: Missing required option --data/-d")
+        print_usage()
+        sys.exit(1)
+
+    make_qrcode(**kwargs)
+
     if include_svg:
-        make_qrcode_svg(input_data, output_dir)
+        make_qrcode_svg(kwargs["input_data"], kwargs.get("output_dir", "./qrcode-output/"))
 
 if __name__ == "__main__":
-    import sys
     main(sys.argv[1:])

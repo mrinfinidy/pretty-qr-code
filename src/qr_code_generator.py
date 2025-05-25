@@ -3,9 +3,9 @@
 import qrcode
 from qrcode.constants import ERROR_CORRECT_H
 import qrcode.image.svg
-from qrcode.image.styles.moduledrawers.svg import SvgCircleDrawer
+from qrcode.image.styles.moduledrawers.svg import SvgSquareDrawer
 from qrcode.image.styledpil import StyledPilImage
-from qrcode.image.styles.moduledrawers.pil import CircleModuleDrawer
+from qrcode.image.styles.moduledrawers.pil import RoundedModuleDrawer
 from qrcode.image.styles.colormasks import RadialGradiantColorMask, SolidFillColorMask
 from PIL import Image, ImageDraw
 import os
@@ -155,7 +155,7 @@ def generate_qr_code(
     else:
         qr_image = qr.make_image(
                 image_factory=StyledPilImage,
-                module_drawer=CircleModuleDrawer(),
+                module_drawer=RoundedModuleDrawer(),
                 embeded_image_path = os.path.join('./assets/', qr_image_parts.embeded_image_name)
             )
         intermediate_image = Image.composite(qr_image_parts.inner_eyes_image, qr_image, qr_image_parts.inner_eye_mask)
@@ -174,24 +174,24 @@ def save_image(final_image, output_dir):
 # main function that calls all steps needed to make a qrcode
 def make_qrcode(
     input_data,
-    input_image,
-    drawer_instance,
-    drawer_instance_inner,
-    drawer_instance_outer,
-    base_color,
-    inner_eye_color,
-    outer_eye_color,
-    version,
-    error_correction,
-    box_size,
-    border,
-    output_dir
+    input_image=None,
+    drawer_instance=RoundedModuleDrawer(),
+    drawer_instance_inner=RoundedModuleDrawer(),
+    drawer_instance_outer=RoundedModuleDrawer(),
+    base_color='#000000',
+    inner_eye_color='#000000',
+    outer_eye_color='#000000',
+    version=5,
+    error_correction=ERROR_CORRECT_H,
+    box_size=10,
+    border=4,
+    output_dir='./qrcode-output/'
 ):
     qr = create_qrcode_instance(
-        version,
-        error_correction,
-        box_size,
-        border
+        version=version,
+        error_correction=error_correction,
+        box_size=box_size,
+        border=border
     )
     add_data(qr, input_data)
     qr_image_parts = create_image(
@@ -212,12 +212,12 @@ def make_qrcode(
     save_image(final_image, output_dir)
 
 # Additionaly to the png qrcode an svg is created as well
-def make_qrcode_svg(input_data, output_dir):
+def make_qrcode_svg(input_data, output_dir='./qrcode-output/'):
     qr = create_qrcode_instance()
     add_data(qr, input_data)
     qr_svg = qr.make_image(
         image_factory=qrcode.image.svg.SvgImage,
-        module_drawer=SvgCircleDrawer(),
+        module_drawer=SvgSquareDrawer(),
     )
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
