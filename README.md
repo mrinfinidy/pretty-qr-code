@@ -69,7 +69,7 @@ Pass `""` or `blank` as image_file_name if you don't want to use an image.\
 You can store an image in the assets folder and pass the file name if you want to use you own image.
 
 ### Sample Command
-`./result/bin/entrypoint.py --data "https://github.com/mrinfinidy/qr-code-generator/tree/develop" --input default --style circle --style-inner round --style-outer round --base "#222433" --color-inner "#737BAB" --color-outer "#ff7373" --output "/home/bignixy/Pictures/" --svg`
+`./result/bin/entrypoint.py --data "https://github.com/mrinfinidy/qr-code-generator/tree/develop" --input default --style vertical-bars --style-inner round --style-outer round --base "#000000" --color-inner "#ff7373" --color-outer "#000000" --output "/home/bignixy/Pictures/" --svg`
 
 ## TODOs
 
