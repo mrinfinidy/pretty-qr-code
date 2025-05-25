@@ -31,7 +31,10 @@ Example:
   entrypoint.py -d "https://example.com" -i logo.png -b #000000 -n #000fff -r #fff000 -o ./output --style circle --style-inner square --style-outer circle --svg
 """)
 
-def main(argv):
+def main(argv=None):
+    if argv is None:
+        argv = sys.argv[1:]
+
     kwargs = {}
     include_svg = False
 
