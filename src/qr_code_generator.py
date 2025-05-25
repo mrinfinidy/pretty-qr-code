@@ -118,8 +118,12 @@ def create_image(
 
     if embeded_image_name == 'default':
         embeded_image_path = './assets/default.png'
-    elif embeded_image_name and os.path.isfile(embeded_image_name):
-        embeded_image_path = embeded_image_name
+    elif embeded_image_name:
+        path_expanded = os.path.expanduser(embeded_image_name)
+        if os.path.isfile(path_expanded):
+            embeded_image_path = path_expanded
+        else:
+            embeded_image_path = None
     else:
         embeded_image_path = None
 
@@ -159,8 +163,7 @@ def generate_qr_code(
     elif qr_image_parts.embeded_image_name == 'default':
         intermediate_image = Image.composite(qr_image_parts.inner_eyes_image, qr_image_parts.qr_image, qr_image_parts.inner_eye_mask)
     else:
-        embeded_image_path = qr_image_parts.embeded_image_name
-        # If it's not absolute and file doesn't exist, try './assets/' folder
+        embeded_image_path = os.path.expanduser(qr_image_parts.embeded_image_name)
         if not os.path.isabs(embeded_image_path) and not os.path.isfile(embeded_image_path):
             embeded_image_path = os.path.join('./assets/', embeded_image_path)
 
@@ -175,6 +178,7 @@ def generate_qr_code(
 
 # Save the image to a file
 def save_image(final_image, output_dir):
+    output_dir = os.path.expanduser(output_dir)  # Expand tilde
     if not os.path.exists(output_dir):
         print(f"Output directory '{output_dir}' does not exist. Creating it.")
         os.makedirs(output_dir)
@@ -224,6 +228,7 @@ def make_qrcode(
 
 # Additionaly to the png qrcode an svg is created as well
 def make_qrcode_svg(input_data, output_dir='./qrcode-output/'):
+    output_dir = os.path.expanduser(output_dir)  # Expand tilde
     qr = create_qrcode_instance()
     add_data(qr, input_data)
     qr_svg = qr.make_image(
