@@ -11,7 +11,7 @@ from PIL import Image, ImageDraw
 import os
 import sys
 
-#Custom function for eye styling. These create the eye masks
+# Custom function for eye styling. These create the eye masks
 class Qr_image_parts:
     def __init__(self, 
         embeded_image_name,
@@ -116,17 +116,22 @@ def create_image(
 
     embeded_image_name = input_image
 
-    if embeded_image_name == 'pos-adapter':
-        embeded_image_path = os.getenv('NESTO_DEFAULT_QR_LOGO_POS_ADAPTER', './assets/nesto-pos-logo.png')
+    if embeded_image_name == 'default':
+        embeded_image_path = './assets/default.png'
+    elif embeded_image_name and os.path.isfile(embeded_image_name):
+        embeded_image_path = embeded_image_name
     else:
-        embeded_image_path = os.getenv('NESTO_DEFAULT_QR_LOGO', './assets/default.png')
+        embeded_image_path = None
 
-    qr_image = qr.make_image(
-            image_factory=StyledPilImage,
-            module_drawer=drawer_instance,
-            color_mask=SolidFillColorMask(front_color=hex_to_rgb(base_color)),
-            embeded_image_path = embeded_image_path
-        )
+    kwargs = {
+        "image_factory": StyledPilImage,
+        "module_drawer": drawer_instance,
+        "color_mask": SolidFillColorMask(front_color=hex_to_rgb(base_color))
+    }
+    if embeded_image_path:
+        kwargs["embeded_image_path"] = embeded_image_path
+
+    qr_image = qr.make_image(**kwargs)
     
     qr_image_simple = qr.make_image(
             image_factory=StyledPilImage,
@@ -148,15 +153,21 @@ def generate_qr_code(
     qr_image_parts.qr_image = qr_image_parts.qr_image.convert("RGBA")
     qr_image_parts.inner_eye_mask = qr_image_parts.inner_eye_mask.convert("L")
     qr_image_parts.outer_eye_mask = qr_image_parts.outer_eye_mask.convert("L")
+
     if not qr_image_parts.embeded_image_name or qr_image_parts.embeded_image_name == 'blank':
         intermediate_image = Image.composite(qr_image_parts.inner_eyes_image, qr_image_parts.qr_image_simple, qr_image_parts.inner_eye_mask)
-    elif qr_image_parts.embeded_image_name == 'default' or qr_image_parts.embeded_image_name == 'pos-adapter':
+    elif qr_image_parts.embeded_image_name == 'default':
         intermediate_image = Image.composite(qr_image_parts.inner_eyes_image, qr_image_parts.qr_image, qr_image_parts.inner_eye_mask)
     else:
+        embeded_image_path = qr_image_parts.embeded_image_name
+        # If it's not absolute and file doesn't exist, try './assets/' folder
+        if not os.path.isabs(embeded_image_path) and not os.path.isfile(embeded_image_path):
+            embeded_image_path = os.path.join('./assets/', embeded_image_path)
+
         qr_image = qr.make_image(
                 image_factory=StyledPilImage,
                 module_drawer=RoundedModuleDrawer(),
-                embeded_image_path = os.path.join('./assets/', qr_image_parts.embeded_image_name)
+                embeded_image_path=embeded_image_path
             )
         intermediate_image = Image.composite(qr_image_parts.inner_eyes_image, qr_image, qr_image_parts.inner_eye_mask)
 
