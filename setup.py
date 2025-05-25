@@ -10,9 +10,13 @@ setup(
     url="https://gitlab.nesto.app/nesto-software/pos-adapter-v2/qr-code-generator",
     package_dir={"": "src"},
     py_modules=["qr_code_generator", "entrypoint", "const"],
-    scripts=["src/entrypoint.py"],
     install_requires=[
         'qrcode',
         'PIL'
     ],
+    entry_points={
+        'console_scripts': [
+            'qrcode-pretty = entrypoint:main',
+        ]
+    },
 )

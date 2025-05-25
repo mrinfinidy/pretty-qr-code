@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 
 pkgs.python3Packages.buildPythonApplication {
-  pname = "qr-code-generator";
+  pname = "qrcode-pretty";
   version = "1.0.0";
   src = ./..;
   doCheck = false;

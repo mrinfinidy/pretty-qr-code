@@ -23,8 +23,8 @@
           };
         in
         rec {
-          qr-code-generator = pkgs.callPackage ./pkgs { };
-          default = qr-code-generator;
+          qrcode-pretty = pkgs.callPackage ./pkgs { };
+          default = qrcode-pretty;
         });
       packages = forAllSystems (system: nixpkgs.lib.filterAttrs (_: v: nixpkgs.lib.isDerivation v) self.legacyPackages.${system});
       nixosModules = import ./modules;
