@@ -81,6 +81,7 @@ Available styles: square, gapped-square, circle, round, vertical-bars, horizonta
 ```
 ### Samples
 ![qrcode cat](./samples/qrcode-cat.png)
+
 `./result/bin/qrcode-pretty --data "https://github.com/mrinfinidy/pretty-qr-code" --input default --style circle --style-inner round --style-outer round --base "#000000" --color-inner "#ff7373" --color-outer "#000000" --output "/home/bignixy/Pictures/" --svg`
 
 ### NixOS
