@@ -80,9 +80,13 @@ Options:
 Available styles: square, gapped-square, circle, round, vertical-bars, horizontal-bars
 ```
 ### Samples
+#### QR Code Cat
 ![qrcode cat](./samples/qrcode-cat.png)
 
 `./result/bin/qrcode-pretty --data "https://github.com/mrinfinidy/pretty-qr-code" --input default --style circle --style-inner round --style-outer round --base "#000000" --color-inner "#ff7373" --color-outer "#000000" --output "/home/bignixy/Pictures/" --svg`
+
+#### QR Code 
+`./result/bin/qrcode-pretty --data "https://github.com/mrinfinidy/pretty-qr-code" --input "~/Documents/projects/afkdev8/public/images/navbarImg-dark.png" --style circle --style-inner round --style-outer round --base "#000000" --color-inner "#ff7373" --color-outer "#000000" --output "~/Pictures/" --svg`
 
 ### NixOS
 If you installed the package into your PATH with the methods listed above, you can just run: `qrcode-pretty`
