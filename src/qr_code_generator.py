@@ -150,7 +150,8 @@ def create_image(
 # Generate qr code based on image input
 def generate_qr_code(
         qr,
-        qr_image_parts
+        qr_image_parts,
+        drawer_instance
     ):
     qr_image_parts.inner_eyes_image = qr_image_parts.inner_eyes_image.convert("RGBA")
     qr_image_parts.outer_eyes_image = qr_image_parts.outer_eyes_image.convert("RGBA")
@@ -169,7 +170,7 @@ def generate_qr_code(
 
         qr_image = qr.make_image(
                 image_factory=StyledPilImage,
-                module_drawer=RoundedModuleDrawer(),
+                module_drawer=drawer_instance,
                 embeded_image_path=embeded_image_path
             )
         intermediate_image = Image.composite(qr_image_parts.inner_eyes_image, qr_image, qr_image_parts.inner_eye_mask)
@@ -223,7 +224,7 @@ def make_qrcode(
         box_size,
         border,
     )
-    final_image = generate_qr_code(qr, qr_image_parts)
+    final_image = generate_qr_code(qr, qr_image_parts, drawer_instance)
     save_image(final_image, output_dir)
 
 # Additionaly to the png qrcode an svg is created as well
