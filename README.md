@@ -16,10 +16,19 @@ Check out the usage for all available options.
 This tool is packaged as a NixOS package. You might want to install it using the following flake input:
 
 ```
-qr-code-generator = {
-    url = "git+https://_:<access-token>@gitlab.nesto.app/nesto-software/pos-adapter-v2/qr-code-generator?ref=main";
-    inputs.nixpkgs.follows = "nixpkgs";
+qrcode-pretty = {
+  url = "github:mrinfinidy/pretty-qr-code";
+  inputs.nixpkgs.follows = "nixpkgs";
 };
+```
+
+Add the flake input to the outputs:
+```
+outputs = {
+  # your other outputs
+  qrcode-pretty,
+  ...
+}@inputs:  
 ```
 
 Further, add the following to your home-manager config:
@@ -27,20 +36,9 @@ Further, add the following to your home-manager config:
 ```
 home-manager.users.<your-user> = {
     home.packages = [
-        (qr-code-generator.packages.${system}.default.override
-        {
-            inherit pkgs;
-        })
+        (inputs.qrcode-pretty.packages.${pkgs.system}.default)
     ];
 };
-```
-
-You might also want to add:
-
-```
-nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "qr-code-generator"
-];
 ```
 
 ### Contribute
