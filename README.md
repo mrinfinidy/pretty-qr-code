@@ -92,27 +92,27 @@ Launch script from project root directory:
 #### QR Code Github
 ![qrcode github cat](./samples/qrcode-cat.png)
 
-`./result/bin/qrcode-pretty --data "https://github.com/mrinfinidy/pretty-qr-code" --image default --style circle --style-inner round --style-outer round --base "#000000" --color-inner "#ff7373" --color-outer "#000000" --output "~/Pictures/"`
+`qrcode-pretty --data "https://github.com/mrinfinidy/pretty-qr-code" --image default --style circle --style-inner round --style-outer round --base "#000000" --color-inner "#ff7373" --color-outer "#000000" --output "~/Pictures/"`
 
 ![qrcode github cat 2](./samples/qrcode-cat-2.png)
 
-`./result/bin/qrcode-pretty --data "https://github.com/mrinfinidy/pretty-qr-code" --image default --style round --style-inner round --style-outer round --base "#1d2021" --color-inner "#d3869b" --color-outer "#458588" --output "~/Pictures/"`
+`qrcode-pretty --data "https://github.com/mrinfinidy/pretty-qr-code" --image default --style round --style-inner round --style-outer round --base "#1d2021" --color-inner "#d3869b" --color-outer "#458588" --output "~/Pictures/"`
 
 ![qrcode github](./samples/qrcode-purple.png)
 
-`./result/bin/qrcode-pretty --data "https://github.com/mrinfinidy/pretty-qr-code" --style round --style-inner round --style-outer round --base "#8e8ece" --color-inner "#6cf2e5" --color-outer "#40E0D0" --output "~/Pictures/"`
+`qrcode-pretty --data "https://github.com/mrinfinidy/pretty-qr-code" --style round --style-inner round --style-outer round --base "#8e8ece" --color-inner "#6cf2e5" --color-outer "#40E0D0" --output "~/Pictures/"`
 
 #### QR Code afkdev8 (my homepage)
 ![qrcode afkdev8 vertical-bars](./samples/qrcode-afkdev8-vertical.png)
 
-`./result/bin/qrcode-pretty --data "https://www.afkdev8.com/" --image "~/Pictures/afkdev8-logo.png" --style vertical-bars --style-inner round --style-outer round --base "#000000" --color-inner "#000000" --color-outer "#000000" --output "~/Pictures/"`
+`qrcode-pretty --data "https://www.afkdev8.com/" --image "~/Pictures/afkdev8-logo.png" --style vertical-bars --style-inner round --style-outer round --base "#000000" --color-inner "#000000" --color-outer "#000000" --output "~/Pictures/"`
 
 ![qrcode afkdev8 horizontal-bars](./samples/qrcode-afkdev-horizontal.png)
 
-`./result/bin/qrcode-pretty --data "https://www.afkdev8.com/" --image "~/Pictures/afkdev8-logo-dark.png" --style horizontal-bars --style-inner round --style-outer round --base "#000000" --color-inner "#000000" --color-outer "#000000" --output "~/Pictures/"`
+`qrcode-pretty --data "https://www.afkdev8.com/" --image "~/Pictures/afkdev8-logo-dark.png" --style horizontal-bars --style-inner round --style-outer round --base "#000000" --color-inner "#000000" --color-outer "#000000" --output "~/Pictures/"`
 
 #### QR Code lemons
 
 ![qrcode lemons](./samples/qrcode-lemons.png)
 
-`./result/bin/qrcode-pretty --data "lemons" --image "~/Pictures/lemons.png" --style square --style-inner circle --style-outer gapped-square --base "#000000" --color-inner "#000000" --color-outer "#000000" --output "~/Pictures/"`
+`qrcode-pretty --data "lemons" --image "~/Pictures/lemons.png" --style square --style-inner circle --style-outer gapped-square --base "#000000" --color-inner "#000000" --color-outer "#000000" --output "~/Pictures/"`
