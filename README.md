@@ -116,3 +116,6 @@ Launch script from project root directory:
 ![qrcode lemons](./samples/qrcode-lemons.png)
 
 `qrcode-pretty --data "lemons" --image "~/Pictures/lemons.png" --style square --style-inner circle --style-outer gapped-square --base "#000000" --color-inner "#000000" --color-outer "#000000" --output "~/Pictures/"`
+
+## Author
+afkdev8 `<mail@afkdev8.com>`
