@@ -80,7 +80,7 @@ Options:
 Available styles: square, gapped-square, circle, round, vertical-bars, horizontal-bars
 ```
 ### Samples
-#### QR Code Cat
+#### QR Code Github
 ![qrcode github cat](./samples/qrcode-cat.png)
 
 `./result/bin/qrcode-pretty --data "https://github.com/mrinfinidy/pretty-qr-code" --image default --style circle --style-inner round --style-outer round --base "#000000" --color-inner "#ff7373" --color-outer "#000000" --output "~/Pictures/"`
@@ -111,10 +111,3 @@ Launch script from project root directory:
 Pass `default` as image_file_name in order to use the standard Nesto logo.\
 Pass `""` or `blank` as image_file_name if you don't want to use an image.\
 You can store an image in the assets folder and pass the file name if you want to use you own image.
-
-
-## TODOs
-
-- Pass inputs as cli args instead of interactive prompt (&check;)
-- Write a proper usage section for manual installation (&check;)
-- Add top padding to pos-adapter-logo.png
