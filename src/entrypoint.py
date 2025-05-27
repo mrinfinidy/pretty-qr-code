@@ -11,7 +11,7 @@ def print_usage():
 Options:
   -h, --help                  Show this help message and exit
   -d, --data <data>           Data to encode in QR code (required)
-  -i, --input <image>         Input image file name (optional)
+  -i, --image <image>         Input image file name (optional)
   -s, --style <style>         Style for the QR code modules (optional)
       --style-inner <style>   Style for the inner eyes (optional)
       --style-outer <style>   Style for the outer eyes (optional)
@@ -43,7 +43,7 @@ def main(argv=None):
             argv,
             "hi:o:d:b:n:r:s:",
             [
-                "input=",
+                "image=",
                 "output=",
                 "data=",
                 "base=",
@@ -71,7 +71,7 @@ def main(argv=None):
         elif opt in ("-d", "--data"):
             kwargs["input_data"] = arg
 
-        elif opt in ("-i", "--input"):
+        elif opt in ("-i", "--image"):
             kwargs["input_image"] = arg
 
         elif opt in ("-s", "--style"):
