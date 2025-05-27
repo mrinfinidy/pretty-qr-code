@@ -65,7 +65,7 @@ Use `qrcode-pretty -h` to print all available options:
 Options:
   -h, --help                  Show this help message and exit
   -d, --data <data>           Data to encode in QR code (required)
-  -i, --input <image>         Input image file name (optional)
+  -i, --image <image>         Input image file name (optional)
   -s, --style <style>         Style for the QR code modules (optional)
       --style-inner <style>   Style for the inner eyes (optional)
       --style-outer <style>   Style for the outer eyes (optional)
