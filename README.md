@@ -110,3 +110,9 @@ Launch script from project root directory:
 ![qrcode afkdev8 horizontal-bars](./samples/qrcode-afkdev-horizontal.png)
 
 `./result/bin/qrcode-pretty --data "https://www.afkdev8.com/" --image "~/Pictures/afkdev8-logo-dark.png" --style horizontal-bars --style-inner round --style-outer round --base "#000000" --color-inner "#000000" --color-outer "#000000" --output "~/Pictures/"`
+
+#### QR Code lemons
+
+![qrcode lemons](./samples/qrcode-lemons.png)
+
+`./result/bin/qrcode-pretty --data "lemons" --image "~/Pictures/lemons.png" --style square --style-inner circle --style-outer gapped-square --base "#000000" --color-inner "#000000" --color-outer "#000000" --output "~/Pictures/"`
