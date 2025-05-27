@@ -117,7 +117,7 @@ def create_image(
     embeded_image_name = input_image
 
     if embeded_image_name == 'default':
-        embeded_image_path = './assets/default.png'
+        embeded_image_path = os.environ.get('DEFAULT_IMAGE', './assets/default.png')
     elif embeded_image_name:
         path_expanded = os.path.expanduser(embeded_image_name)
         if os.path.isfile(path_expanded):

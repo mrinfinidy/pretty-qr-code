@@ -16,12 +16,12 @@ pkgs.python3Packages.buildPythonApplication {
   ];
 
   makeWrapperArgs = [
-    "--set NESTO_DEFAULT_QR_LOGO ${./../assets/default.png}"
+    "--set DEFAULT_IMAGE ${./../assets/default.png}"
   ];
 
   meta = with lib; {
-    homepage = "https://gitlab.nesto.app/nesto-software/pos-adapter-v2/qr-code-generator";
-    description = "A tool which generates beautiful nesto-branded qr-codes";
+    homepage = "https://github.com/mrinfinidy/pretty-qr-code";
+    description = "A tool which generates beautiful QR codes with customizable styles and embedded images";
     license = licenses.unfree;
   };
 }
