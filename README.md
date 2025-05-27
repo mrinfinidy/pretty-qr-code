@@ -1,5 +1,7 @@
 # Pretty QR Code
 
+![Banner](./samples/banner.png)
+
 ## Overview
 Generate pretty QR codes.
 
@@ -79,6 +81,13 @@ Options:
 
 Available styles: square, gapped-square, circle, round, vertical-bars, horizontal-bars
 ```
+
+### NixOS
+If you installed the package into your PATH with the methods listed above, you can just run: `qrcode-pretty`
+### Manual Installation
+Launch script from project root directory:
+`python ./qrcode-pretty`
+
 ### Samples
 #### QR Code Github
 ![qrcode github cat](./samples/qrcode-cat.png)
@@ -101,13 +110,3 @@ Available styles: square, gapped-square, circle, round, vertical-bars, horizonta
 ![qrcode afkdev8 horizontal-bars](./samples/qrcode-afkdev-horizontal.png)
 
 `./result/bin/qrcode-pretty --data "https://www.afkdev8.com/" --image "~/Pictures/afkdev8-logo-dark.png" --style horizontal-bars --style-inner round --style-outer round --base "#000000" --color-inner "#000000" --color-outer "#000000" --output "~/Pictures/"`
-
-### NixOS
-If you installed the package into your PATH with the methods listed above, you can just run: `qrcode-pretty`
-### Manual Installation
-Launch script from project root directory:
-`python ./qrcode-pretty`
-
-Pass `default` as image_file_name in order to use the standard Nesto logo.\
-Pass `""` or `blank` as image_file_name if you don't want to use an image.\
-You can store an image in the assets folder and pass the file name if you want to use you own image.
