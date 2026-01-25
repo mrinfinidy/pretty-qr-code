@@ -18,7 +18,7 @@ Options:
   -b, --base <hex>            Base color hex code (e.g. #000000)
   -n, --color-inner <hex>     Inner eye color hex code
   -r, --color-outer <hex>     Outer eye color hex code
-  -o, --output <dir>          Output directory path (default: ./qrcode-output/)
+  -o, --output <dir>          Output directory path (default: ~/Pictures/pretty-qr-code/)
       --svg                   Also generate SVG output (optional flag)
       --version <int>         QR version (default: 5)
       --box-size <int>        Box size in pixels (default: 10)
@@ -133,7 +133,7 @@ def main(argv=None):
     make_qrcode(**kwargs)
 
     if include_svg:
-        make_qrcode_svg(kwargs["input_data"], kwargs.get("output_dir", "./qrcode-output/"))
+        make_qrcode_svg(kwargs["input_data"], kwargs.get("output_dir", "~/Pictures/pretty-qr-code/"))
 
 if __name__ == "__main__":
     main(sys.argv[1:])

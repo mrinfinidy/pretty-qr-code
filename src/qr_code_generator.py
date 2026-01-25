@@ -220,7 +220,7 @@ def save_image(final_image, output_dir):
         print(f"Output directory '{output_dir}' does not exist. Creating it.")
         os.makedirs(output_dir)
     result_path = os.path.join(output_dir, "qrcode.png")
-    print("Saving .png to: ", result_path)
+    print("Saving qr-code (png) to: ", result_path)
     final_image.save(result_path)
 
 
@@ -238,7 +238,7 @@ def make_qrcode(
     error_correction=ERROR_CORRECT_H,
     box_size=10,
     border=4,
-    output_dir=".qrcode-output/",
+    output_dir="~/Pictures/pretty-qr-code/",
 ):
     qr = create_qrcode_instance(
         version=version,
@@ -266,7 +266,7 @@ def make_qrcode(
 
 
 # Additionaly to the png qrcode an svg is created as well
-def make_qrcode_svg(input_data, output_dir=".qrcode-output/"):
+def make_qrcode_svg(input_data, output_dir="~/Picrures/pretty-qr-code/"):
     output_dir = os.path.expanduser(output_dir)  # Expand tilde
     qr = create_qrcode_instance()
     add_data(qr, input_data)
@@ -277,5 +277,5 @@ def make_qrcode_svg(input_data, output_dir=".qrcode-output/"):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     result_path = os.path.join(output_dir, "qrcode.svg")
-    print("Saving .svg to: ", result_path)
+    print("Saving qr-code (svg) to: ", result_path)
     qr_svg.save(result_path)
