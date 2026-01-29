@@ -7,7 +7,9 @@ Build-Depends: debhelper-compat (= 13),
                python3-all,
                python3-setuptools,
                python3-hatchling,
-               pybuild-plugin-pyproject
+               pybuild-plugin-pyproject,
+               python3-qrcode,
+               python3-pil
 Standards-Version: 4.6.2
 Homepage: https://www.afkdev8.com/
 Vcs-Browser: https://github.com/mrinfinidy/qrcode-pretty
