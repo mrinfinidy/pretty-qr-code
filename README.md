@@ -54,6 +54,45 @@ nix build github:mrinfinidy/pretty-qr-code#qrcode-pretty
 nix run .#qrcode-pretty -- -d "your data here"
 ```
 
+### Debian/Ubuntu
+
+Download and install the `.deb` package from the [releases page](https://github.com/mrinfinidy/qrcode-pretty/releases):
+
+```bash
+# Download the latest .deb package
+wget https://github.com/mrinfinidy/qrcode-pretty/releases/download/<version>/qrcode-pretty_<version>-1_all.deb
+
+# Install the package
+sudo dpkg -i qrcode-pretty_<version>-1_all.deb
+
+# Install dependencies if needed
+sudo apt-get install -f
+```
+
+Or build from source (see [PACKAGING.md](PACKAGING.md) for details):
+
+```bash
+dpkg-buildpackage -us -uc -b
+sudo dpkg -i ../qrcode-pretty_<version>-1_all.deb
+```
+
+### Arch Linux (AUR)
+
+Install from the AUR using your preferred AUR helper:
+
+```bash
+# Using yay
+yay -S qrcode-pretty
+
+# Using paru
+paru -S qrcode-pretty
+
+# Or manually with makepkg
+git clone https://aur.archlinux.org/qrcode-pretty.git
+cd qrcode-pretty
+makepkg -si
+```
+
 ### Using uv
 
 [uv](https://github.com/astral-sh/uv) is a fast Python package installer and resolver, which I prefer over pip/pipx:
