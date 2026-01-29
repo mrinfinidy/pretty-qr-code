@@ -5,10 +5,10 @@ pkgs.python3Packages.buildPythonApplication {
   version = "1.0.0";
   src = ./..;
   doCheck = false;
-  format = "setuptools";
+  pyproject = true;
 
   nativeBuildInputs = [
-    pkgs.python3Packages.setuptools
+    pkgs.python3Packages.hatchling
   ];
 
   propagatedBuildInputs = [
