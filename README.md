@@ -1,4 +1,4 @@
-# Pretty QR Code
+# QR Code Pretty
 
 ![Banner](./samples/banner.png)
 
@@ -6,7 +6,7 @@
 
 Generate pretty QR codes.
 
-Pretty QR Code uses the [python-qrcode](https://github.com/lincolnloop/python-qrcode) library to generate qr codes
+QR Code Pretty uses the [python-qrcode](https://github.com/lincolnloop/python-qrcode) library to generate qr codes
 and provides various options to customize the qrcode.
 You can adjust style, color and add an image in the middle.
 Check out the usage for all available options.
@@ -196,7 +196,7 @@ uv build
 
 ## Usage
 
-Pretty QR Code provides the `qrcode-pretty` command-line tool.
+QR Code Pretty provides the `qrcode-pretty` command-line tool.
 
 ### Basic Usage
 
