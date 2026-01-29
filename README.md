@@ -48,10 +48,16 @@ Or build and run directly:
 
 ```bash
 # Build with Nix
-nix build github:mrinfinidy/qrcode-pretty#qrcode-pretty
+nix build github:mrinfinidy/qrcode-pretty
 
 # Run from local checkout
 nix run .#qrcode-pretty -- -d "your data here"
+```
+
+Or to test without permanent installation:
+
+```bash
+nix run github:mrinfinidy/qrcode-pretty --override-input nixpkgs nixpkgs
 ```
 
 ### Debian/Ubuntu
