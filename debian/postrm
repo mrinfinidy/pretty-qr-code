@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    remove|purge)
+        # Remove empty directories if they exist
+        rmdir /usr/share/qrcode-pretty/assets 2>/dev/null || true
+        rmdir /usr/share/qrcode-pretty 2>/dev/null || true
+        rmdir /usr/lib/qrcode-pretty 2>/dev/null || true
+        ;;
+    
+    upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+        ;;
+    
+    *)
+        echo "postrm called with unknown argument \`$1'" >&2
+        exit 1
+        ;;
+esac
+
+#DEBHELPER#
+
+exit 0

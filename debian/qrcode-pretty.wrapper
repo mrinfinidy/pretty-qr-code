@@ -1,0 +1,3 @@
+#!/bin/sh
+export DEFAULT_IMAGE="${DEFAULT_IMAGE:-/usr/share/qrcode-pretty/assets/default.png}"
+exec /usr/lib/qrcode-pretty/qrcode-pretty-real "$@"

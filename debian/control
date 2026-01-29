@@ -1,0 +1,29 @@
+Source: qrcode-pretty
+Section: utils
+Priority: optional
+Maintainer: afkdev8 <mail@afkdev8.com>
+Build-Depends: debhelper-compat (= 13),
+               dh-python,
+               python3-all,
+               python3-setuptools,
+               python3-hatchling,
+               pybuild-plugin-pyproject
+Standards-Version: 4.6.2
+Homepage: https://www.afkdev8.com/
+Vcs-Browser: https://github.com/mrinfinidy/qrcode-pretty
+Vcs-Git: https://github.com/mrinfinidy/qrcode-pretty.git
+Rules-Requires-Root: no
+
+Package: qrcode-pretty
+Architecture: all
+Depends: ${python3:Depends},
+         ${misc:Depends},
+         python3-qrcode,
+         python3-pil
+Description: Generate pretty QR codes with customization options
+ Pretty QR Code uses the python-qrcode library to generate QR codes
+ and provides various options to customize the QR code.
+ .
+ You can adjust style, color and add an image in the middle.
+ Available styles include: square, gapped-square, circle, round,
+ vertical-bars, and horizontal-bars.

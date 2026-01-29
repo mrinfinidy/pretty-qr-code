@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+
+export PYBUILD_NAME=qrcode-pretty
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+override_dh_auto_install:
+	dh_auto_install
+	install -d debian/qrcode-pretty/usr/share/qrcode-pretty/assets
+	install -m 644 assets/default.png debian/qrcode-pretty/usr/share/qrcode-pretty/assets/
+	install -d debian/qrcode-pretty/usr/lib/qrcode-pretty
+	mv debian/qrcode-pretty/usr/bin/qrcode-pretty debian/qrcode-pretty/usr/lib/qrcode-pretty/qrcode-pretty-real
+	install -m 755 debian/qrcode-pretty.wrapper debian/qrcode-pretty/usr/bin/qrcode-pretty
+
