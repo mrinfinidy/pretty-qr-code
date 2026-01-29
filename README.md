@@ -19,7 +19,7 @@ This tool is packaged as a NixOS package. You can install it using the following
 
 ```nix
 qrcode-pretty = {
-  url = "github:mrinfinidy/pretty-qr-code";
+  url = "github:mrinfinidy/qrcode-pretty";
   inputs.nixpkgs.follows = "nixpkgs";
 };
 ```
@@ -48,7 +48,7 @@ Or build and run directly:
 
 ```bash
 # Build with Nix
-nix build github:mrinfinidy/pretty-qr-code#qrcode-pretty
+nix build github:mrinfinidy/qrcode-pretty#qrcode-pretty
 
 # Run from local checkout
 nix run .#qrcode-pretty -- -d "your data here"
@@ -98,7 +98,7 @@ makepkg -si
 [uv](https://github.com/astral-sh/uv) is a fast Python package installer and resolver, which I prefer over pip/pipx:
 
 ```bash
-uv tool install pretty-qr-code
+uv tool install qrcode-pretty
 ```
 
 ### Using pipx
@@ -106,7 +106,7 @@ uv tool install pretty-qr-code
 For installing as a standalone command-line tool:
 
 ```bash
-pipx install pretty-qr-code
+pipx install qrcode-pretty
 ```
 
 ## Development
@@ -124,8 +124,8 @@ pipx install pretty-qr-code
 
 ```bash
 # Clone the repository
-git clone https://github.com/mrinfinidy/pretty-qr-code.git
-cd pretty-qr-code
+git clone https://github.com/mrinfinidy/qrcode-pretty.git
+cd qrcode-pretty
 
 # Enter development shell
 nix-shell
@@ -138,8 +138,8 @@ nix develop
 
 ```bash
 # Clone the repository
-git clone https://github.com/mrinfinidy/pretty-qr-code.git
-cd pretty-qr-code
+git clone https://github.com/mrinfinidy/qrcode-pretty.git
+cd qrcode-pretty
 
 # Create virtual environment and install in editable mode
 uv venv
@@ -156,8 +156,8 @@ qrcode-pretty -d "test"
 
 ```bash
 # Clone the repository
-git clone https://github.com/mrinfinidy/pretty-qr-code.git
-cd pretty-qr-code
+git clone https://github.com/mrinfinidy/qrcode-pretty.git
+cd qrcode-pretty
 
 # Create and activate virtual environment
 python -m venv .venv
@@ -189,9 +189,9 @@ nix build .#qrcode-pretty
 # Build wheel and source distribution
 uv build
 
-# Output will be in dist/
-# - dist/pretty_qr_code-1.0.0-py3-none-any.whl
-# - dist/pretty_qr_code-1.0.0.tar.gz
+# Output will be in dist/ e.g.:
+# - dist/qrcode_pretty-1.0.0-py3-none-any.whl
+# - dist/qrcode_pretty-1.0.0.tar.gz
 ```
 
 ## Usage
@@ -203,7 +203,7 @@ Pretty QR Code provides the `qrcode-pretty` command-line tool.
 Generate a QR code with minimal options:
 
 ```bash
-qrcode-pretty -d "https://github.com/mrinfinidy/pretty-qr-code"
+qrcode-pretty -d "https://github.com/mrinfinidy/qrcode-pretty"
 ```
 
 ### Command-Line Options
@@ -221,7 +221,7 @@ Options:
   -b, --base <hex>            Base color hex code (e.g. #000000)
   -n, --color-inner <hex>     Inner eye color hex code
   -r, --color-outer <hex>     Outer eye color hex code
-  -o, --output <dir>          Output directory path (default: ~/Pictures/pretty-qr-code/)
+  -o, --output <dir>          Output directory path (default: ~/Pictures/qrcode-pretty/)
       --svg                   Also generate SVG output (optional flag)
       --version <int>         QR version (default: 5)
       --box-size <int>        Box size in pixels (default: 10)
@@ -233,21 +233,27 @@ Available styles: square, gapped-square, circle, round, vertical-bars, horizonta
 
 **Note:** When embedding a center image (logo), it is recommended to use a high error correction level (default: H).
 
+**About the `--image` option:**
+
+- Use `--image /path/to/your/logo.png` to embed your own image in the QR code center
+- Use `--image default` to use the bundled demonstration image (included with all installation methods)
+- Omit `--image` to generate a QR code without a center image
+
 ### Sample Gallery
 
 #### QR Code Github
 
 ![qrcode github cat](./samples/qrcode-cat.png)
 
-`qrcode-pretty --data "https://github.com/mrinfinidy/pretty-qr-code" --image default --style circle --style-inner round --style-outer round --base "#000000" --color-inner "#ff7373" --color-outer "#000000" --output "~/Pictures/"`
+`qrcode-pretty --data "https://github.com/mrinfinidy/qrcode-pretty" --image default --style circle --style-inner round --style-outer round --base "#000000" --color-inner "#ff7373" --color-outer "#000000" --output "~/Pictures/"`
 
 ![qrcode github cat 2](./samples/qrcode-cat-2.png)
 
-`qrcode-pretty --data "https://github.com/mrinfinidy/pretty-qr-code" --image default --style round --style-inner round --style-outer round --base "#1d2021" --color-inner "#d3869b" --color-outer "#458588" --output "~/Pictures/"`
+`qrcode-pretty --data "https://github.com/mrinfinidy/qrcode-pretty" --image default --style round --style-inner round --style-outer round --base "#1d2021" --color-inner "#d3869b" --color-outer "#458588" --output "~/Pictures/"`
 
 ![qrcode github](./samples/qrcode-purple.png)
 
-`qrcode-pretty --data "https://github.com/mrinfinidy/pretty-qr-code" --style round --style-inner round --style-outer round --base "#8e8ece" --color-inner "#6cf2e5" --color-outer "#40E0D0" --output "~/Pictures/"`
+`qrcode-pretty --data "https://github.com/mrinfinidy/qrcode-pretty" --style round --style-inner round --style-outer round --base "#8e8ece" --color-inner "#6cf2e5" --color-outer "#40E0D0" --output "~/Pictures/"`
 
 #### QR Code afkdev8 (my homepage)
 
@@ -269,8 +275,8 @@ Available styles: square, gapped-square, circle, round, vertical-bars, horizonta
 
 This package follows modern Python packaging standards:
 
-- **Package Name**: `pretty-qr-code`
-- **Module Name**: `pretty_qr_code`
+- **Package Name**: `qrcode-pretty`
+- **Module Name**: `qrcode_pretty`
 - **Build System**: [Hatchling](https://hatch.pypa.io/)
 - **Configuration**: `pyproject.toml` (PEP 621 compliant)
 - **Minimum Python**: 3.8+
@@ -278,9 +284,9 @@ This package follows modern Python packaging standards:
 ### Project Structure
 
 ```
-pretty-qr-code/
+qrcode-pretty/
 ├── src/
-│   └── pretty_qr_code/
+│   └── qrcode_pretty/
 │       ├── __init__.py
 │       ├── entrypoint.py
 │       ├── qr_code_generator.py
