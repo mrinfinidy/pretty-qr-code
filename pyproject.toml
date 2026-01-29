@@ -1,0 +1,51 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pretty-qr-code"
+version = "1.0.0"
+description = "Generate beautiful, customizable QR codes with various styles and colors"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "afkdev8", email = "mail@afkdev8.com"},
+]
+keywords = ["qrcode", "qr", "generator", "pretty", "customizable"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Graphics",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "qrcode[pil]>=7.0",
+    "pillow>=9.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/mrinfinidy/pretty-qr-code"
+Repository = "https://github.com/mrinfinidy/pretty-qr-code"
+Issues = "https://github.com/mrinfinidy/pretty-qr-code/issues"
+
+[project.scripts]
+qrcode-pretty = "pretty_qr_code.entrypoint:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pretty_qr_code"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/README.md",
+    "/LICENSE",
+]
