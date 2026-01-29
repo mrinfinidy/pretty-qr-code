@@ -1,8 +1,13 @@
 {
-  description = "A tool which generates beautiful nesto-branded qr-codes";
+  description = "A tool which generates pretty QR codes";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-  outputs = { self, nixpkgs, poetry2nix }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      poetry2nix,
+    }:
     let
       systems = [
         "x86_64-linux"
@@ -15,7 +20,8 @@
       forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
     in
     {
-      legacyPackages = forAllSystems (system:
+      legacyPackages = forAllSystems (
+        system:
         let
           pkgs = import nixpkgs {
             inherit system;
@@ -25,8 +31,11 @@
         rec {
           qrcode-pretty = pkgs.callPackage ./pkgs { };
           default = qrcode-pretty;
-        });
-      packages = forAllSystems (system: nixpkgs.lib.filterAttrs (_: v: nixpkgs.lib.isDerivation v) self.legacyPackages.${system});
+        }
+      );
+      packages = forAllSystems (
+        system: nixpkgs.lib.filterAttrs (_: v: nixpkgs.lib.isDerivation v) self.legacyPackages.${system}
+      );
       nixosModules = import ./modules;
     };
 }
