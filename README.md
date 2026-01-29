@@ -56,7 +56,7 @@ Run `nix-shell` in the project root directory.
 - Python 3
 - pip
   - qrcode
-  - Pillow
+  - pillow
 
 #### Install Dependencies
 
