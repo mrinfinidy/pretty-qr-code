@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pretty-qr-code"
-version = "1.0.0"
-description = "Generate beautiful, customizable QR codes with various styles and colors"
+version = "1.0.1"
+description = "A tool which generates pretty QR codes"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
