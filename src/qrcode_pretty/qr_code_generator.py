@@ -33,6 +33,34 @@ class Qr_image_parts:
         self.qr_image_simple = qr_image_simple
 
 
+def find_default_image():
+    """Find the default image in standard locations.
+    
+    Searches for the default image in the following order:
+    1. Environment variable DEFAULT_IMAGE (highest priority)
+    2. System-wide install: /usr/share/qrcode-pretty/assets/default.png
+    3. Python prefix install: {sys.prefix}/share/qrcode-pretty/assets/default.png
+    4. Local development: ./assets/default.png
+    5. Package relative: ../../assets/default.png (from module directory)
+    
+    Returns:
+        str: Path to the default image, or fallback to ./assets/default.png
+    """
+    search_paths = [
+        os.environ.get("DEFAULT_IMAGE"),
+        "/usr/share/qrcode-pretty/assets/default.png",
+        os.path.join(sys.prefix, "share/qrcode-pretty/assets/default.png"),
+        "./assets/default.png",
+        os.path.join(os.path.dirname(__file__), "..", "..", "assets", "default.png"),
+    ]
+    
+    for path in search_paths:
+        if path and os.path.isfile(path):
+            return path
+    
+    return "./assets/default.png"
+
+
 def hex_to_rgb(hex):
     hex = hex.lstrip("#")
     return (
@@ -128,7 +156,7 @@ def create_image(
     embeded_image_name = input_image
 
     if embeded_image_name == "default":
-        embeded_image_path = os.environ.get("DEFAULT_IMAGE", "./assets/default.png")
+        embeded_image_path = find_default_image()
     elif embeded_image_name:
         path_expanded = os.path.expanduser(embeded_image_name)
         if os.path.isfile(path_expanded):
@@ -238,7 +266,7 @@ def make_qrcode(
     error_correction=ERROR_CORRECT_H,
     box_size=10,
     border=4,
-    output_dir="~/Pictures/pretty-qr-code/",
+    output_dir="~/Pictures/qrcode-pretty/",
 ):
     qr = create_qrcode_instance(
         version=version,
@@ -266,7 +294,7 @@ def make_qrcode(
 
 
 # Additionaly to the png qrcode an svg is created as well
-def make_qrcode_svg(input_data, output_dir="~/Picrures/pretty-qr-code/"):
+def make_qrcode_svg(input_data, output_dir="~/Pictures/qrcode-pretty/"):
     output_dir = os.path.expanduser(output_dir)  # Expand tilde
     qr = create_qrcode_instance()
     add_data(qr, input_data)
