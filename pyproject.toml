@@ -33,7 +33,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/mrinfinidy/pretty-qr-code"
+Homepage = "https://www.afkdev8.com/"
 Repository = "https://github.com/mrinfinidy/pretty-qr-code"
 Issues = "https://github.com/mrinfinidy/pretty-qr-code/issues"
 
