@@ -1,6 +1,6 @@
 {
   description = "A tool which generates pretty QR codes";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.nixpkgs.url = "nixpkgs";
 
   outputs =
     {
