@@ -2,8 +2,8 @@
 
 import sys
 import getopt
-from qr_code_generator import make_qrcode, make_qrcode_svg
-from const import DRAWER_CLASSES, ERROR_CORRECTION_LEVELS
+from .qr_code_generator import make_qrcode, make_qrcode_svg
+from .const import DRAWER_CLASSES, ERROR_CORRECTION_LEVELS
 
 def print_usage():
     print("""Usage: qrcode-pretty [options]
