@@ -6,7 +6,6 @@
     {
       self,
       nixpkgs,
-      poetry2nix,
     }:
     let
       systems = [
