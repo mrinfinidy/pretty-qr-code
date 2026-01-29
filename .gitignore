@@ -2,3 +2,7 @@ __pycache__/
 qrenv/
 result
 qrcode-output/
+.venv
+dist/
+*.egg-info/
+build/
