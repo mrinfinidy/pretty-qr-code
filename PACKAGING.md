@@ -7,6 +7,7 @@ This document explains how to build and test packages for Debian/Ubuntu and Arch
 ### For Debian/Ubuntu Packaging
 
 Install build dependencies:
+
 ```bash
 sudo apt-get install debhelper dh-python python3-all python3-setuptools \
                      python3-hatchling pybuild-plugin-pyproject
@@ -15,6 +16,7 @@ sudo apt-get install debhelper dh-python python3-all python3-setuptools \
 ### For Arch Linux Packaging
 
 Install build dependencies:
+
 ```bash
 sudo pacman -S base-devel python python-build python-installer python-hatchling
 ```
@@ -31,15 +33,15 @@ From the project root directory:
 # Build the .deb package
 dpkg-buildpackage -us -uc -b
 
-# The package will be created in the parent directory
-# ../qrcode-pretty_1.0.2-1_all.deb
+# The package will be created in the parent directory, e.g.:
+# ../qrcode-pretty_1.0.3-1_all.deb
 ```
 
 ###Testing the Package
 
 ```bash
 # Install the package
-sudo dpkg -i ../qrcode-pretty_1.0.2-1_all.deb
+sudo dpkg -i ../qrcode-pretty_1.0.3-1_all.deb
 
 # Install any missing dependencies
 sudo apt-get install -f
@@ -67,18 +69,21 @@ dpkg -l | grep qrcode-pretty
 ### Troubleshooting
 
 **Missing dependencies:**
+
 ```bash
 sudo apt-get install -f
 ```
 
 **Check package contents:**
+
 ```bash
-dpkg-deb -c ../qrcode-pretty_1.0.2-1_all.deb
+dpkg-deb -c ../qrcode-pretty_1.0.3-1_all.deb
 ```
 
 **Lintian checks (optional):**
+
 ```bash
-lintian ../qrcode-pretty_1.0.2-1_all.deb
+lintian ../qrcode-pretty_1.0.3-1_all.deb
 ```
 
 ---
@@ -94,8 +99,8 @@ makepkg -si
 # Or just build without installing
 makepkg
 
-# The package will be created in the current directory
-# qrcode-pretty-1.0.2-1-any.pkg.tar.zst
+# The package will be created in the current directory, e.g.:
+# qrcode-pretty-1.0.3-1-any.pkg.tar.zst
 ```
 
 ### Generate .SRCINFO (for AUR)
@@ -108,7 +113,7 @@ makepkg --printsrcinfo > .SRCINFO
 
 ```bash
 # Install
-sudo pacman -U qrcode-pretty-1.0.2-1-any.pkg.tar.zst
+sudo pacman -U qrcode-pretty-1.0.3-1-any.pkg.tar.zst
 
 # Test basic functionality
 qrcode-pretty --data "https://example.com" --output /tmp
@@ -137,12 +142,14 @@ pacman -Q qrcode-pretty 2>&1 | grep "was not found"
 1. **Create AUR account** at https://aur.archlinux.org/
 
 2. **Clone the AUR repository:**
+
 ```bash
 git clone ssh://aur@aur.archlinux.org/qrcode-pretty.git aur-qrcode-pretty
 cd aur-qrcode-pretty
 ```
 
 3. **Add packaging files:**
+
 ```bash
 # Copy PKGBUILD from project root
 cp ../PKGBUILD .
@@ -152,13 +159,15 @@ makepkg --printsrcinfo > .SRCINFO
 ```
 
 4. **Commit and push:**
+
 ```bash
 git add PKGBUILD .SRCINFO
-git commit -m "Initial commit: qrcode-pretty 1.0.2"
+git commit -m "Commit message here"
 git push
 ```
 
 5. **Update for new versions:**
+
 ```bash
 # Update pkgver in PKGBUILD
 # Regenerate .SRCINFO
@@ -239,9 +248,9 @@ pip install build twine
 # Build wheel and source distribution
 python -m build
 
-# Output in dist/:
-# - qrcode_pretty-1.0.2-py3-none-any.whl
-# - qrcode_pretty-1.0.2.tar.gz
+# Output in dist/ e.g.:
+# - qrcode_pretty-1.0.3-py3-none-any.whl
+# - qrcode_pretty-1.0.3.tar.gz
 ```
 
 ### Publish to PyPI
@@ -278,6 +287,7 @@ When releasing a new version:
 ## Files Overview
 
 ### Debian Packaging Files
+
 - `debian/control` - Package metadata and dependencies
 - `debian/rules` - Build instructions
 - `debian/changelog` - Version history
@@ -287,10 +297,12 @@ When releasing a new version:
 - `debian/source/format` - Source package format
 
 ### Arch Packaging Files
+
 - `PKGBUILD` - Build script and metadata
 - `.SRCINFO` - Metadata for AUR (generated from PKGBUILD)
 
 ### Python Code Enhancements
+
 - `src/qrcode_pretty/qr_code_generator.py` - Added `find_default_image()` function
 
 ---
@@ -298,5 +310,6 @@ When releasing a new version:
 ## Support
 
 For issues or questions:
+
 - **GitHub Issues**: https://github.com/mrinfinidy/qrcode-pretty/issues
 - **Email**: mail@afkdev8.com

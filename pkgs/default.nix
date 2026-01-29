@@ -2,7 +2,7 @@
 
 pkgs.python3Packages.buildPythonApplication {
   pname = "qrcode-pretty";
-  version = "1.0.2";
+  version = "1.0.3";
   src = ./..;
   doCheck = false;
   pyproject = true;
