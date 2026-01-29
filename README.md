@@ -59,9 +59,6 @@ nix run .#qrcode-pretty -- -d "your data here"
 [uv](https://github.com/astral-sh/uv) is a fast Python package installer and resolver, which I prefer over pip:
 
 ```bash
-# Install uv if you don't have it
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
 # Install the package
 uv pip install pretty-qr-code
 
@@ -125,7 +122,7 @@ nix-shell
 nix develop
 ```
 
-#### Using uv (Recommended)
+#### Using uv
 
 ```bash
 # Clone the repository
