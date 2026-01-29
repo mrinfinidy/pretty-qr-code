@@ -59,7 +59,6 @@ nix run .#qrcode-pretty -- -d "your data here"
 [uv](https://github.com/astral-sh/uv) is a fast Python package installer and resolver, which I prefer over pip/pipx:
 
 ```bash
-# Install the package
 uv tool install pretty-qr-code
 ```
 
@@ -68,7 +67,6 @@ uv tool install pretty-qr-code
 For installing as a standalone command-line tool:
 
 ```bash
-# Install pretty-qr-code
 pipx install pretty-qr-code
 ```
 
