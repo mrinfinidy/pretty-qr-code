@@ -46,6 +46,11 @@ home-manager.users.<your-user> = {
 
 ### Contribute
 
+#### NixOS
+
+On NixOS you can use the shell.nix to enter a development environment.
+Run `nix-shell` in the project root directory.
+
 #### Requirements
 
 - Python 3
@@ -95,8 +100,8 @@ If you installed the package into your PATH with the methods listed above, you c
 
 ### Manual Installation
 
-Launch script from project root directory:
-`python ./qrcode-pretty`
+If you did a manual installation with python/pip, launch the program from the root directory:
+`python src/entrypoint.py`
 
 ### Samples
 
