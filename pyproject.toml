@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "pretty-qr-code"
+name = "qrcode-pretty"
 version = "1.0.2"
 description = "A tool which generates pretty QR codes"
 readme = "README.md"
@@ -35,14 +35,14 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://www.afkdev8.com/"
-Repository = "https://github.com/mrinfinidy/pretty-qr-code"
-Issues = "https://github.com/mrinfinidy/pretty-qr-code/issues"
+Repository = "https://github.com/mrinfinidy/qrcode-pretty"
+Issues = "https://github.com/mrinfinidy/qrcode-pretty/issues"
 
 [project.scripts]
-qrcode-pretty = "pretty_qr_code.entrypoint:main"
+qrcode-pretty = "qrcode_pretty.entrypoint:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/pretty_qr_code"]
+packages = ["src/qrcode_pretty"]
 
 [tool.hatch.build.targets.sdist]
 include = [
