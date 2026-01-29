@@ -10,7 +10,7 @@ Install build dependencies:
 
 ```bash
 sudo apt-get install debhelper dh-python python3-all python3-setuptools \
-                     python3-hatchling pybuild-plugin-pyproject
+  python3-hatchling pybuild-plugin-pyproject python3-qrcode python3-pil
 ```
 
 ### For Arch Linux Packaging
