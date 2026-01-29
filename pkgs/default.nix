@@ -21,8 +21,8 @@ pkgs.python3Packages.buildPythonApplication {
   ];
 
   meta = with lib; {
-    homepage = "https://github.com/mrinfinidy/pretty-qr-code";
-    description = "A tool which generates beautiful QR codes with customizable styles and embedded images";
+    homepage = "https://github.com/mrinfinidy/qrcode-pretty";
+    description = "A tool which generates pretty QR codes";
     license = licenses.mit;
   };
 }
