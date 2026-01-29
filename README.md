@@ -15,9 +15,9 @@ Check out the usage for all available options.
 
 ### NixOS
 
-This tool is packaged as a NixOS package. You might want to install it using the following flake input:
+This tool is packaged as a NixOS package. You can install it using the following flake input:
 
-```
+```nix
 qrcode-pretty = {
   url = "github:mrinfinidy/pretty-qr-code";
   inputs.nixpkgs.follows = "nixpkgs";
@@ -26,7 +26,7 @@ qrcode-pretty = {
 
 Add the flake input to the outputs:
 
-```
+```nix
 outputs = {
   # your other outputs
   qrcode-pretty,
@@ -34,9 +34,9 @@ outputs = {
 }@inputs:
 ```
 
-Further, add the following to your home-manager config:
+Then add to your home-manager config:
 
-```
+```nix
 home-manager.users.<your-user> = {
     home.packages = [
         (inputs.qrcode-pretty.packages.${pkgs.system}.default)
@@ -44,33 +44,161 @@ home-manager.users.<your-user> = {
 };
 ```
 
-### Contribute
+Or build and run directly:
 
-#### NixOS
+```bash
+# Build with Nix
+nix build github:mrinfinidy/pretty-qr-code#qrcode-pretty
 
-On NixOS you can use the shell.nix to enter a development environment.
-Run `nix-shell` in the project root directory.
+# Run from local checkout
+nix run .#qrcode-pretty -- -d "your data here"
+```
 
-#### Requirements
+### Using uv
 
-- Python 3
-- pip
-  - qrcode
-  - pillow
+[uv](https://github.com/astral-sh/uv) is a fast Python package installer and resolver, which I prefer over pip:
 
-#### Install Dependencies
+```bash
+# Install uv if you don't have it
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-You can install the pip packages directly on your system or in a virtual environment.
+# Install the package
+uv pip install pretty-qr-code
 
-1. `python -m venv qrenv` (only if you run the tool in a virtual environment)
-2. `source qrenv/bin/activate` (only if you run the tool in a virtual environment)
-3. `pip install qrcode`
-4. `pip install Pillow`
+# Or install from source
+git clone https://github.com/mrinfinidy/pretty-qr-code.git
+cd pretty-qr-code
+uv pip install .
+```
+
+### Using pip
+
+Install directly from the built wheel or from source:
+
+```bash
+# Install from PyPI (when published)
+pip install pretty-qr-code
+
+# Or install from source
+pip install git+https://github.com/mrinfinidy/pretty-qr-code.git
+
+# Or install from local source
+git clone https://github.com/mrinfinidy/pretty-qr-code.git
+cd pretty-qr-code
+pip install .
+```
+
+### Using pipx
+
+For installing as a standalone command-line tool:
+
+```bash
+# Install pipx if needed
+pip install pipx
+
+# Install pretty-qr-code
+pipx install pretty-qr-code
+```
+
+## Development
+
+### Requirements
+
+- Python 3.8 or higher
+- Dependencies (automatically installed):
+  - qrcode[pil] >= 7.0
+  - pillow >= 9.0
+
+### Setting Up Development Environment
+
+#### Using NixOS
+
+```bash
+# Clone the repository
+git clone https://github.com/mrinfinidy/pretty-qr-code.git
+cd pretty-qr-code
+
+# Enter development shell
+nix-shell
+
+# Or use the flake development shell
+nix develop
+```
+
+#### Using uv (Recommended)
+
+```bash
+# Clone the repository
+git clone https://github.com/mrinfinidy/pretty-qr-code.git
+cd pretty-qr-code
+
+# Create virtual environment and install in editable mode
+uv venv
+source .venv/bin/activate  # On Linux/Mac
+# or: .venv\Scripts\activate  # On Windows
+
+uv pip install -e .
+
+# Run the tool
+qrcode-pretty -d "test"
+```
+
+#### Using pip/venv
+
+```bash
+# Clone the repository
+git clone https://github.com/mrinfinidy/pretty-qr-code.git
+cd pretty-qr-code
+
+# Create and activate virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Linux/Mac
+# or: .venv\Scripts\activate  # On Windows
+
+# Install in editable mode
+pip install -e .
+
+# Run the tool
+qrcode-pretty -d "test"
+```
+
+### Building the Package
+
+#### With Nix
+
+```bash
+# Build with Nix
+nix build .#qrcode-pretty
+
+# Result will be in ./result/
+./result/bin/qrcode-pretty --help
+```
+
+#### With uv
+
+```bash
+# Build wheel and source distribution
+uv build
+
+# Output will be in dist/
+# - dist/pretty_qr_code-1.0.0-py3-none-any.whl
+# - dist/pretty_qr_code-1.0.0.tar.gz
+```
 
 ## Usage
 
-Pretty QR Code provides the program `qrcode-pretty`.
-You have to at least provide the `-d <data to encode>` option to generate a qr code: `qrcode-pretty -d "https://github.com/mrinfinidy/pretty-qr-code"`
+Pretty QR Code provides the `qrcode-pretty` command-line tool.
+
+### Basic Usage
+
+Generate a QR code with minimal options:
+
+```bash
+qrcode-pretty -d "https://github.com/mrinfinidy/pretty-qr-code"
+```
+
+### Command-Line Options
+
 Use `qrcode-pretty -h` to print all available options:
 
 ```
@@ -94,16 +222,9 @@ Options:
 Available styles: square, gapped-square, circle, round, vertical-bars, horizontal-bars
 ```
 
-### NixOS
+**Note:** When embedding a center image (logo), it is recommended to use a high error correction level (default: H).
 
-If you installed the package into your PATH with the methods listed above, you can just run: `qrcode-pretty`
-
-### Manual Installation
-
-If you did a manual installation with python/pip, launch the program from the root directory:
-`python src/entrypoint.py`
-
-### Samples
+### Sample Gallery
 
 #### QR Code Github
 
@@ -134,6 +255,31 @@ If you did a manual installation with python/pip, launch the program from the ro
 ![qrcode lemons](./samples/qrcode-lemons.png)
 
 `qrcode-pretty --data "lemons" --image "~/Pictures/lemons.png" --style square --style-inner circle --style-outer gapped-square --base "#000000" --color-inner "#000000" --color-outer "#000000" --output "~/Pictures/"`
+
+## Package Information
+
+This package follows modern Python packaging standards:
+
+- **Package Name**: `pretty-qr-code`
+- **Module Name**: `pretty_qr_code`
+- **Build System**: [Hatchling](https://hatch.pypa.io/)
+- **Configuration**: `pyproject.toml` (PEP 621 compliant)
+- **Minimum Python**: 3.8+
+
+### Project Structure
+
+```
+pretty-qr-code/
+├── src/
+│   └── pretty_qr_code/
+│       ├── __init__.py
+│       ├── entrypoint.py
+│       ├── qr_code_generator.py
+│       └── const.py
+├── pyproject.toml
+├── README.md
+└── LICENSE
+```
 
 ## Author
 
